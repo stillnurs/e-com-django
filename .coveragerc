@@ -1,0 +1,7 @@
+[run]
+source=authentication/,manager/,vendor/,client/,market/,cart/
+omit=
+    venv
+    */migrations/*
+    */tests/*
+    */__init__.py
