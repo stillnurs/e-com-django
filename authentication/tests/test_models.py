@@ -1,14 +1,26 @@
 from rest_framework.test import APITestCase
 from authentication.models import User
 
+from faker import Faker
+
+faker = Faker()
+password = faker.paragraph(nb_sentences=6)
+fake_user = {
+        'username': faker.name().split(' ')[0],
+        'email': faker.email(),
+        'password': password
+        }
+
+
 
 class TestModel(APITestCase):
 
+
     def test_creates_user(self):
-        user = User.objects.create_user('George', 'gwashington@gmail.com', 'gw123456')
+        user = User.objects.create_user(fake_user['username'], fake_user['email'],fake_user['password'])
         self.assertIsInstance(user, User)
         self.assertFalse(user.is_staff)
-        self.assertEqual(user.email, 'gwashington@gmail.com')
+        self.assertEqual(user.email, fake_user['email'])
 
     def test_creates_super_user(self):
         user = User.objects.create_superuser('George', 'gwashington@gmail.com', 'gw123456')
