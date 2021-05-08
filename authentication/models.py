@@ -20,7 +20,7 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
     username = models.CharField(
         _('username'),
         max_length=150,
-        unique=True,
+        unique=True, blank=False, 
         help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
         validators=[username_validator],
         error_messages={
@@ -29,7 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
     )
     first_name = models.CharField(_('first name'), max_length=150, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
-    email = models.EmailField(_('email address'), max_length=150, unique=True)
+    email = models.EmailField(_('email address'), max_length=150, unique=True, blank=False)
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
