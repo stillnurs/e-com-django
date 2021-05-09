@@ -3,6 +3,7 @@ coverage==5.5
 Django==3.2.2
 djangorestframework==3.12.4
 djangorestframework-jwt==1.11.0
+djangorestframework-simplejwt==4.6.0
 Faker==8.1.2
 Pillow==8.2.0
 PyJWT==1.7.1

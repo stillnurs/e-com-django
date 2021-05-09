@@ -3,16 +3,6 @@ from django.contrib.auth.models import UserManager
 
 
 
-class TrackingModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-        ordering = ('-created_at')
-
-
-
 class MyUserManager(UserManager):
     def _create_user(self, username, email, password, **extra_fields):
         """
@@ -32,6 +22,8 @@ class MyUserManager(UserManager):
     def create_user(self, username, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('is_client', False)
+        extra_fields.setdefault('is_vendor', False)
         return self._create_user(username, email, password, **extra_fields)
 
 

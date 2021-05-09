@@ -1,27 +1,30 @@
 from django.shortcuts import render
 from django.conf import settings
-from django.contrib import auth
 
 from rest_framework.generics import GenericAPIView
-from rest_framework import response, status
+from rest_framework import response, status, permissions
 import jwt
 
-from authentication.serializers import RegisterSerializer, LoginSerializer, UserSerializer
+from authentication.serializers import *
+from .renderer import UserRenderer
 
 
 
 class RegisterAPIView(GenericAPIView):
-    
+
     serializer_class = RegisterSerializer
+    # renderer_classes = (UserRenderer,)
 
     def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+        user = request.data
+        serializer = self.serializer_class(data=user)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        user_data = serializer.data
+        user = User.objects.get(email=user_data['email'])
+        token = RefreshToken.for_user(user).access_token
         
-        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return response.Response(user_data, status=status.HTTP_201_CREATED)
         
 
 
@@ -29,22 +32,23 @@ class LoginAPIView(GenericAPIView):
     serializer_class = LoginSerializer
     
     def post(self, request):
-        data = request.data
-        email = data.get('email', '')
-        password = data.get('password', '')
-        user = auth.authenticate(
-            email=email, password=password)
+                
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
         
-        if user:
-            auth_token = jwt.encode({'email': user.email}, settings.JWT_SECRET_KEY)
+        return response.Response(serializer.data, status=status.HTTP_200_OK)
 
-            serializer = UserSerializer(user)
-            data = {
-                'user': serializer.data,
-                'token': auth_token,
-                }
-            return response.Response(data, status=status.HTTP_200_OK)
-        
 
-        return response.Response({
-            'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class LogoutAPIView(GenericAPIView):
+    serializer_class = LogoutSerializer
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

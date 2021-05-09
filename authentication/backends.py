@@ -15,11 +15,15 @@ class JWTAuthentication(authentication.BasicAuthentication):
             return None
         
         prefix, token = auth_data.decode('utf-8').split(' ')
+        
+        if User.object.get(is_vendor):
+            user_status = 'vendor'
+        user_status = 'client'
 
         try:
             payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms="HS256")
-            user = User.objects.get(email=payload['email'])
-            return (user, token)
+            user_email = User.objects.get(email=payload['email'])
+            return (user_email, user_status, token)
 
         except jwt.DecodeError as identifier:
             raise exceptions.AuthenticationFailed(

@@ -1,26 +1,11 @@
 from rest_framework import serializers
 
 from .models import Vendor, Stock
-from authentication.serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from authentication.serializers import UserSerializer
+
 
 
 class VendorSerializer(UserSerializer):
-
-    class Meta:
-        model = Vendor
-        fields = '__all__'
-
-
-
-class VendorRegisterSerializer(RegisterSerializer):
-    
-    class Meta:
-        model = Vendor
-        fields = '__all__'
-
-    
-
-class VendorLoginSerializer(LoginSerializer):
 
     class Meta:
         model = Vendor

@@ -4,11 +4,13 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
-from manager.models import TrackingModel, MyUserManager
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from manager.models import MyUserManager
 
 
 
-class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
+class User(AbstractBaseUser, PermissionsMixin):
     """
     An abstract base class implementing a fully featured User model with
     admin-compliant permissions.
@@ -30,6 +32,16 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
     first_name = models.CharField(_('first name'), max_length=150, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     email = models.EmailField(_('email address'), max_length=150, unique=True, blank=False)
+    is_vendor = models.BooleanField(
+        _('vendor status'),
+        default=False,
+        help_text=_('Designates whether the user is Vendor status.'),
+    )
+    is_client = models.BooleanField(
+        _('client status'),
+        default=False,
+        help_text=_('Designates whether the user is Client status.'),
+    )
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
@@ -57,6 +69,11 @@ class User(AbstractBaseUser, PermissionsMixin, TrackingModel):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
+
     @property
-    def token(self):
-        return ''
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }
