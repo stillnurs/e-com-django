@@ -20,4 +20,3 @@ class StockSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'country', 'photo', 'count')
         lookup_field = 'id'
 
-    

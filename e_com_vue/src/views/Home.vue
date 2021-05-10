@@ -1,59 +1,60 @@
 <template>
   <div class="home">
     <section class="hero is-medium is-dark mb-6">
-        <div class="hero-body has-text-centered">
-            <p class="title mb-6">
-                Welcome E-Com
-            </p>
-            <p class="subtitle">
-                The best E-Commerce web page in the wild west
-            </p>
-        </div>
+      <div class="hero-body has-text-centered">
+        <p class="title mb-6">
+          Welcome E-Com
+        </p>
+        <p class="subtitle">
+          The best E-Commerce web page in the wild west
+        </p>
+      </div>
     </section>
 
     <div class="columns is-multiline">
       <div class="column is-12">
-          <h2 class="is-size-2 has-text-centered">Latest products</h2>
+        <h2 class="is-size-2 has-text-centered">Latest products</h2>
       </div>
 
-      <ProductBox 
+      <ProductBox
         v-for="product in latestProducts"
         v-bind:key="product.id"
-        v-bind:product="product" />
+        v-bind:product="product"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import ProductBox from '@/components/ProductBox'
+import axios from "axios";
+import ProductBox from "@/components/ProductBox";
 export default {
-  name: 'Home',
+  name: "Home",
   data() {
     return {
-      latestProducts: []
-    }
+      latestProducts: [],
+    };
   },
   components: {
-    ProductBox
+    ProductBox,
   },
   mounted() {
-    this.getLatestProducts()
-    document.title = 'Home | Djackets'
+    this.getLatestProducts();
+    document.title = "Home | E-Com";
   },
   methods: {
     async getLatestProducts() {
-      this.$store.commit('setIsLoading', true)
+      this.$store.commit("setIsLoading", true);
       await axios
-        .get('/api/v1/latest-products/')
-        .then(response => {
-          this.latestProducts = response.data
+        .get("/api/v1/latest-products/")
+        .then((response) => {
+          this.latestProducts = response.data;
         })
-        .catch(error => {
-          console.log(error)
-        })
-      this.$store.commit('setIsLoading', false)
-    }
-  }
-}
+        .catch((error) => {
+          console.log(error);
+        });
+      this.$store.commit("setIsLoading", false);
+    },
+  },
+};
 </script>
