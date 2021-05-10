@@ -53,7 +53,7 @@ export default {
         .then((response) => {
           this.category = response.data;
 
-          document.title = this.category.name + " | Djackets";
+          document.title = this.category.name + " | E-Com";
         })
         .catch((error) => {
           console.log(error);

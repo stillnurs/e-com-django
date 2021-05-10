@@ -50,10 +50,12 @@
         </div>
 
         <div class="navbar-end">
-          <router-link to="/:category_slug" class="navbar-item"
-            >{category.name}</router-link
+          <router-link to="/categories" class="navbar-item">
+            {{ category.name }}
+          </router-link>
+          <router-link to="/category" class="navbar-item"
+            >Categories</router-link
           >
-          <router-link to="/winter" class="navbar-item">Winter</router-link>
 
           <div class="navbar-item">
             <div class="buttons">

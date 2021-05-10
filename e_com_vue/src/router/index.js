@@ -6,6 +6,7 @@ import Home from "../views/Home.vue";
 
 import Product from "../views/Product.vue";
 import Category from "../views/Category.vue";
+import CategoryList from "../views/Category.vue";
 import Search from "../views/Search.vue";
 import Cart from "../views/Cart.vue";
 import SignUp from "../views/SignUp.vue";
@@ -77,8 +78,13 @@ const routes = [
   },
   {
     path: "/:category_slug",
-    name: "Category",
+    name: "CategoryDetail",
     component: Category,
+  },
+  {
+    path: "/categories/:id",
+    name: "CategoryList",
+    component: CategoryList,
   },
 ];
 
