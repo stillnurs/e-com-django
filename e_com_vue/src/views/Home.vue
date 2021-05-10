@@ -3,10 +3,10 @@
     <section class="hero is-medium is-dark mb-6">
         <div class="hero-body has-text-centered">
             <p class="title mb-6">
-                Welcome to Djacket
+                Welcome E-Com
             </p>
             <p class="subtitle">
-                The best jacket store online
+                The best E-Commerce web page in the wild west
             </p>
         </div>
     </section>
