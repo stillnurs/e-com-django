@@ -24,10 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-sz%dqba@f3h)j1zg8v0kt1t9e%2nnuk$v)czek8u3=%*f4bgd3'
 
+STRIPE_SECRET_KEY = 'sk_test_51HIHiuKBJV2qeWbD4IBpAODack7r7r9LJ0Y65zSFx7jUUwgy2nfKEgQGvorv1p2xp7tgMsJ5N9EW7K1lBdPnFnyK00kdrS27cj'
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+]
 
 
 # Application definition
@@ -43,6 +51,8 @@ INSTALLED_APPS = [
     # frameworks
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'corsheaders',
+    'djoser',
 
     # my apps
     'manager',
@@ -150,7 +160,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
