@@ -46,8 +46,9 @@ export default {
     async getLatestProducts() {
       this.$store.commit("setIsLoading", true);
       await axios
-        .get("/api/v1/latest-products/")
+        .get("/api/v1/market/latest-products/")
         .then((response) => {
+          console.log(response);
           this.latestProducts = response.data;
         })
         .catch((error) => {
@@ -58,3 +59,20 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.image {
+  margin-top: -1.25rem;
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+}
+img.box {
+  width: 450px;
+  height: 300px;
+  object-fit: cover;
+}
+div.hero-body {
+  background-image: url("https://images.unsplash.com/photo-1597910037254-7437ee4e68ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80");
+  background-repeat: no-repeat;
+}
+</style>

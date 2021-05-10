@@ -31,8 +31,8 @@ class Product(models.Model):
     slug = models.SlugField()
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    image = models.ImageField(upload_to='uploads/', null=True, blank=True)
-    thumbnail = models.ImageField(upload_to='uploads/', null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
+    thumbnail = models.ImageField(null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -69,7 +69,7 @@ class Product(models.Model):
         img.thumbnail(size)
 
         thumb_io = BytesIO()
-        img.save(thumb_io, 'JPEG', quality=85)
+        img.save(thumb_io, 'PNG', quality=85)
 
         thumbnail = File(thumb_io, name=image.name)
 
